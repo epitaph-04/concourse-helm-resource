@@ -28,8 +28,8 @@ setup_helm() {
 
         sed -i -e 's/((tiller-namespace))/'$tiller_namespace'/g' /opt/resource/role-tiller.yml
         sed -i -e 's/((tiller-namespace))/'$tiller_namespace'/g' /opt/resource/rolebinding-tiller.yml
-        kubectl create -f role-tiller.yml --namespace $namespace
-        kubectl create -f rolebinding-tiller.yml --namespace $namespace
+        kubectl apply -f /opt/resource/role-tiller.yml --namespace $namespace
+        kubectl apply -f /opt/resource/rolebinding-tiller.yml --namespace $namespace
 
         helm init --tiller-namespace=$tiller_namespace --service-account=$tiller_service_account --upgrade
         wait_for_service_up tiller-deploy 10
