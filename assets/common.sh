@@ -26,8 +26,8 @@ setup_helm() {
     if [ "$init_server" = true ]; then
         tiller_service_account=$(jq -r '.source.tiller_service_account // "default"' < $1)
 
-        sed -i -e 's/((tiller-namespace))/'$tiller_namespace'/g' role-tiller.yml
-        sed -i -e 's/((tiller-namespace))/'$tiller_namespace'/g' rolebinding-tiller.yml
+        sed -i -e 's/((tiller-namespace))/'$tiller_namespace'/g' /opt/resource/role-tiller.yml
+        sed -i -e 's/((tiller-namespace))/'$tiller_namespace'/g' /opt/resource/rolebinding-tiller.yml
         kubectl create -f role-tiller.yml --namespace $namespace
         kubectl create -f rolebinding-tiller.yml --namespace $namespace
 
