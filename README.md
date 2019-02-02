@@ -3,7 +3,7 @@
 Install a [Helm chart](https://github.com/kubernetes/helm) to a generic Kubernetes cluster from [Concourse](https://concourse.ci/)
 
 cluster
-- Native Helm `--wait` flag is used to determine the job's status (merged [PR #7](https://github.com/linkyard/concourse-helm-resource/pull/7))
+- Native Helm `--wait` flag is used to determine the job's status
 - Support for TLS-authenticated Tiller via `ca_cert`, `client_cert`, `client_key`
 
 ### Components
