@@ -5,29 +5,15 @@ setup_kubernetes() {
     payload=$1
     source=$2
     mkdir -p /root/.kube
-    gcloud_auth=$(jq -r '.source.gcloud_auth // ""' < $payload)
     kubeconfig=$(jq -r '.source.kubeconfig // ""' < $payload)
-    
-    if [ -n "$gcloud_auth" ]; then
-        echo "$gcloud_auth" > gcloud-auth-key.json
-        gcloud_project=$(jq -r '.source.gcloud_project // ""' < $payload)
-        gcloud_cluster=$(jq -r '.source.gcloud_cluster // ""' < $payload)
-        gcloud_zone=$(jq -r '.source.gcloud_zone // ""' < $payload)
         
-        gcloud --quiet auth activate-service-account --key-file gcloud-auth-key.json
-        gcloud --quiet config set project $gcloud_project
-        gcloud --quiet config set compute/zone $gcloud_zone
-        gcloud --quiet config set container/cluster $gcloud_cluster
-        gcloud --quiet container clusters get-credentials $gcloud_cluster
-        
-    elif [ -n "$kubeconfig" ]; then
+    if [ -n "$kubeconfig" ]; then
         echo "$kubeconfig" > /root/.kube/config
     else
-        echo "Must specify either \"gcloud_auth\" or \"kubeconfig\" for authenticating to Kubernetes."
+        echo "Must specify \"kubeconfig\" for authenticating to Kubernetes."
         exit 1
     fi
     
-    kubectl cluster-info
     kubectl version
 }
 

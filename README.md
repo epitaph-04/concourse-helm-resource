@@ -10,7 +10,7 @@ cluster
 
 | Component | Version |
 | --- | --- |
-| `helm` | 2.12.0 |
+| `helm` | 2.12.3 |
 | `kubectl` | 1.9.6 |
 
 ## Add resource type to pipeline
@@ -110,35 +110,6 @@ resources:
       - name: some_repo
         url: https://somerepo.github.io/charts
 ```
-
-```yaml
-- name: helm-release
-  type: helm
-  source:
-    gcloud_project: my-project-696969
-    gcloud_cluster: k8s-cluster
-    gcloud_zone: europe-west1
-    gcloud_auth: |
-      {
-      "type": "service_account",
-      "project_id": "XXX",
-      "private_key_id": "XXX",
-      "private_key": "XXX",
-      "client_email": "XXX",
-      "client_id": "XXX",
-      "auth_uri": "XXX",
-      "token_uri": "XXX",
-      "auth_provider_x509_cert_url": "XXX",
-      "client_x509_cert_url": "XXX"
-      }
-    ca_cert: ((helm-auth.ca))
-    client_cert: ((helm-auth.cert))
-    client_key: ((helm-auth.key))
-    repos:
-    - name: my-charts
-      url: https://my-charts.github.io/charts
-```
-
 Add to job:
 
 ```yaml
@@ -153,8 +124,8 @@ jobs:
       - key: replicas
         value: 2
       - key: version
-        path: version/number # Read value from version/number
+        path: version/number
       - key: secret
-        value: ((my-top-secret-value)) # Pulled from a credentials backend like Vault
+        value: ((my-top-secret-value))
         hide: true # Hides value in output
 ```
