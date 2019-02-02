@@ -1,13 +1,8 @@
 # Helm Resource for Concourse
 
-Install a [Helm chart](https://github.com/kubernetes/helm) to a generic Kubernetes cluster (using a kubeconfig file) or a Google Kubernetes Engine cluster (using a GCP service account JSON key) from [Concourse](https://concourse.ci/)
+Install a [Helm chart](https://github.com/kubernetes/helm) to a generic Kubernetes cluster from [Concourse](https://concourse.ci/)
 
-### Differences with linkyard/concourse-helm-resource
-
-This resource is an aggressive fork of https://github.com/linkyard/concourse-helm-resource with these differences:
-
-- `kubeconfig` (a kubeconfig file) can be used for authenticating to Kubernetes
-- `gcloud_project`, `gcloud_cluster`, `gcloud_auth`, `gcloud_zone` can be used to fetch credentials for a Google Kubernetes Engine cluster
+cluster
 - Native Helm `--wait` flag is used to determine the job's status (merged [PR #7](https://github.com/linkyard/concourse-helm-resource/pull/7))
 - Support for TLS-authenticated Tiller via `ca_cert`, `client_cert`, `client_key`
 
