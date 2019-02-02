@@ -19,11 +19,18 @@ setup_kubernetes() {
 
 setup_helm() {
     init_server=$(jq -r '.source.helm_init_server // "false"' < $1)
+    namespace=$(jq -r '.source.namespace // "default"' < $1)
     tiller_namespace=$(jq -r '.source.tiller_namespace // "kube-system"' < $1)
-    helm_request_base="helm"
+    helm_request_base="helm --tiller-namespace $tiller_namespace"
     
     if [ "$init_server" = true ]; then
         tiller_service_account=$(jq -r '.source.tiller_service_account // "default"' < $1)
+
+        sed -i -e 's/((tiller-namespace))/'$tiller_namespace'/g' role-tiller.yml
+        sed -i -e 's/((tiller-namespace))/'$tiller_namespace'/g' rolebinding-tiller.yml
+        kubectl create -f role-tiller.yml --namespace $namespace
+        kubectl create -f rolebinding-tiller.yml --namespace $namespace
+
         helm init --tiller-namespace=$tiller_namespace --service-account=$tiller_service_account --upgrade
         wait_for_service_up tiller-deploy 10
     else
