@@ -10,9 +10,8 @@ cluster
 
 | Component | Version |
 | --- | --- |
-| `helm` | 2.9.1 |
+| `helm` | 2.12.0 |
 | `kubectl` | 1.9.6 |
-| Google Cloud SDK | 201.0.0 |
 
 ## Add resource type to pipeline
 
