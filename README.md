@@ -39,12 +39,7 @@ resource_types:
 
 Authentication can be done either through a kubeconfig file or using GCP service account key:
 
-* `kubeconfig`: *Required if `gcloud_auth` is not present.* kubeconfig file contents
-
-* `gcloud_project`: *Required if `kubeconfig` is not present.* GCP project name
-* `gcloud_cluster`: *Required if `kubeconfig` is not present.* GKE cluster name
-* `gcloud_zone`: *Required if `kubeconfig` is not present.* GCP cluster compute zone.
-* `gcloud_auth`: *Required if `kubeconfig` is not present.* GCP JSON private key file contents
+* `kubeconfig`: *Required
 
 ### Optional values
 
