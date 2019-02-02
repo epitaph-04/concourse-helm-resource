@@ -11,7 +11,7 @@ cluster
 | Component | Version |
 | --- | --- |
 | `helm` | 2.12.3 |
-| `kubectl` | 1.9.6 |
+| `kubectl` | 1.8.4 |
 
 ## Add resource type to pipeline
 
@@ -22,8 +22,8 @@ resource_types:
 - name: helm
   type: docker-image
   source:
-    repository: ilyasotkov/concourse-helm-resource
-    tag: 1.1.1
+    repository: epitaph/concourse-helm-resource
+    tag: latest
 ```
 
 

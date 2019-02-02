@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-ENV KUBECTL_VERSION 1.9.6
+ENV KUBECTL_VERSION 1.8.4
 ENV HELM_VERSION 2.12.3
 
 ADD assets /opt/resource
