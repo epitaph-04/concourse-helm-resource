@@ -55,7 +55,6 @@ setup_helm() {
         --tls-cert $(helm home)/cert.pem \
         --tls-key $(helm home)/key.pem"
     fi
-    eval "$helm_request_base version"
 }
 
 wait_for_service_up() {
