@@ -132,11 +132,12 @@ helm_install() {
 
     # Find the name of the release
     release=`cat $logfile | grep "NAME:" | awk '{print $2}'`
+    echo $release
 }
 
 # Find the current revision of a helm release
 current_revision() {
-    revision=`$helm_request_base history $release | grep "DEPLOYED" | awk '{print $1}'`
+    revision=$($helm_request_base history $release | grep "DEPLOYED" | awk '{print $1}')
     echo $revision
 }
 
