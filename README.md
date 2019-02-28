@@ -1,5 +1,7 @@
 # Helm Resource for Concourse
 
+![Docker Build Status](https://img.shields.io/docker/build/epitaph/concourse-helm-resource.svg?style=popout)
+
 Install a [Helm chart](https://github.com/kubernetes/helm) to a generic Kubernetes cluster from [Concourse](https://concourse.ci/)
 
 cluster
