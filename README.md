@@ -12,8 +12,8 @@ cluster
 
 | Component | Version |
 | --- | --- |
-| `helm` | 2.12.3 |
-| `kubectl` | 1.8.4 |
+| `helm` | 2.13.1 |
+| `kubectl` | 1.14.1 |
 
 ## Add resource type to pipeline
 
