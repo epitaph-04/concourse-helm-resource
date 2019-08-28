@@ -203,8 +203,8 @@ helm_purge() {
         exit 1
     fi
     echo "Deleting with purge the release $release..."
-    helm_cmd="helm delete --purge"
-    helm_echo="helm delete --purge"
+    helm_cmd="$helm_request_base delete --purge"
+    helm_echo="$helm_request_base delete --purge"
     if [ "$debug" = true ]; then
         helm_cmd="$helm_cmd --dry-run --debug"
         helm_echo="$helm_echo --dry-run --debug"
