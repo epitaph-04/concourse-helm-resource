@@ -6,4 +6,15 @@ set -o pipefail
 exec 3>&1 # make stdout available as fd 3 for the result
 exec 1>&2 # redirect all output to stderr for logging
 
-echo '{"version":{"ref":"none"}}' >&3
+source=$1
+payload=$(mktemp helm-in-request.XXXXXX)
+cat > $payload <&0
+
+release=$(jq -r '.version.release // ""' < $payload)
+revision=$(jq -r '.version.revision // ""' < $payload)
+
+if [ -n "$release" ]; then
+  echo $(jq -n "{ version: { release: \"$release\", revision: \"$revision\" } }" | jq -s add) >&3
+else
+  echo $(jq -n "{ version: { release: \"\" } }" | jq -s add) >&3
+fi

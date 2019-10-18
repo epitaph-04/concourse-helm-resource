@@ -21,13 +21,17 @@ namespace=$(jq -r '.source.namespace // "default"' < $payload)
 release=$(jq -r '.source.release // ""' < $payload)
 
 current_release=$(jq -r '.version.release' < $payload || true)
-if [ -z "$release" ]; then
-    release="$current_release"
+
+echo $release
+echo $current_release
+
+if [[ -z "$release" ] && [ -z "$current_release" ]]; then
+    echo '[]' >&3
+    exit 0
 fi
 
 if [ -z "$release" ]; then
-    echo '[]' >&3
-    exit 0
+    release="$current_release"
 fi
 
 current_rev=$(jq -r '.version.revision // "0"' < $payload || true)
