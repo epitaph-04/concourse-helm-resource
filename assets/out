@@ -14,7 +14,7 @@ payload=$(mktemp helm-resource-request.XXXXXX)
 cat > $payload <&0
 
 # Prepare
-setup_resource $payload $source
+setup_resource $payload
 echo "Resource setup successful."
 
 # Parse parameters

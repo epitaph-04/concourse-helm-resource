@@ -25,6 +25,11 @@ if [ -z "$release" ]; then
     release="$current_release"
 fi
 
+if [ -z "$release" ]; then
+    echo '[]' >&3
+    exit 0
+fi
+
 current_rev=$(jq -r '.version.revision // "0"' < $payload || true)
 
 if [ "$current_rev" -eq "0" ]; then

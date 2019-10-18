@@ -3,7 +3,6 @@ set -e
 
 setup_kubernetes() {
     payload=$1
-    source=$2
     mkdir -p /root/.kube
     kubeconfig=$(jq -r '.source.kubeconfig // ""' < $payload)
         
@@ -93,7 +92,7 @@ setup_repos() {
 
 setup_resource() {
     echo "Initializing kubectl..."
-    setup_kubernetes $1 $2
+    setup_kubernetes $1
     echo "Initializing helm..."
     setup_helm $1
     setup_repos $1
