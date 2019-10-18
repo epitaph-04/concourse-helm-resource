@@ -16,14 +16,13 @@ cat > $payload <&0
 setup_resource $payload
 echo "Resource setup successful."
 
+cat $payload
+
 # Parse parameters
 namespace=$(jq -r '.source.namespace // "default"' < $payload)
 release=$(jq -r '.source.release // ""' < $payload)
 
 current_release=$(jq -r '.version.release // ""' < $payload)
-
-echo $release
-echo $current_release
 
 if [ -z "$release" ]; then
     if [ -z "$current_release" ]; then
@@ -36,18 +35,4 @@ fi
 
 current_rev=$(jq -r '.version.revision // "0"' < $payload || true)
 
-if [ "$current_rev" -eq "0" ]; then
-    # Empty => return the current
-    eval "$helm_request_base history $release" | tail -n 1 | while read -r line; do
-        revision=$(echo $line | awk '{ print $1 }')
-        echo "$revision"
-    done | jq -R '.' | jq -s "map({\"revision\": ., \"release\": \"$release\"})"
-else
-    # All versions equal and newer
-    eval "$helm_request_base history $release" | tail -n +2 | while read -r line; do
-        revision=$(echo $line | awk '{ print $1 }')
-        if [ -z "$current_rev" ] || [ "$revision" -ge "$current_rev" ]; then
-            echo "$revision"
-        fi
-    done | jq -R '.' | jq -s "map({\"revision\": ., \"release\": \"$release\"})"
-fi
+eval "$helm_request_base history $release" | tail -n 1 | awk '{ print $1 }' | jq -n "[{ release: \"$release\", revision: \"$revision\" }]" >&3
