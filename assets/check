@@ -23,16 +23,16 @@ namespace=$(jq -r '.source.namespace // "default"' < $payload)
 release=$(jq -r '.source.release // ""' < $payload)
 
 current_release=$(jq -r '.version.release // ""' < $payload)
+current_rev=$(jq -r '.version.revision // "0"' < $payload)
 
 if [ -z "$release" ]; then
     if [ -z "$current_release" ]; then
       echo '[]' >&3
       exit 0
-    else  
-        release="$current_release"
+    else
+        jq -n "[{ release: \"$release\", revision: \"$revision\" }]" >&3
     fi
+else
+    rev=$(eval "$helm_request_base history $release" | tail -n 1 | awk '{ print $1 }')
+    jq -n "[{ release: \"$release\", revision: \"$rev\" }]" >&3
 fi
-
-current_rev=$(jq -r '.version.revision // "0"' < $payload || true)
-
-eval "$helm_request_base history $release" | tail -n 1 | awk '{ print $1 }' | jq -n "[{ release: \"$release\", revision: \"$revision\" }]" >&3
