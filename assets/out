@@ -137,12 +137,6 @@ helm_install() {
     echo $release
 }
 
-# Find the current revision of a helm release
-current_revision() {
-    revision=$("$helm_request_base history $release" | grep "DEPLOYED" | awk '{print $1}')
-    echo $revision
-}
-
 helm_upgrade() {
     helm_cmd="$helm_request_base upgrade $release"
     helm_echo="$helm_request_base upgrade $release"
@@ -265,7 +259,7 @@ else
         helm_install
     fi
 
-    revision=$(current_revision)
+    revision=$("$helm_request_base history $release" | grep "DEPLOYED" | awk '{print $1}')
     echo "Deployed revision $revision of $release"
     wait_ready_notice
     result="$(jq -n "{version:{release:\"$release\", revision:\"$revision\"}, metadata: [{name: \"release\", value: \"$release\"},{name: \"revision\", value: \"$revision\"}]}")"
