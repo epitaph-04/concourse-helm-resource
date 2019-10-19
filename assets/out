@@ -259,7 +259,7 @@ else
         helm_install
     fi
 
-    revision=$("$helm_request_base history $release" | grep "DEPLOYED" | awk '{print $1}')
+    revision=$(eval "$helm_request_base history $release" | grep "DEPLOYED" | awk '{print $1}')
     echo "Deployed revision $revision of $release"
     wait_ready_notice
     result="$(jq -n "{version:{release:\"$release\", revision:\"$revision\"}, metadata: [{name: \"release\", value: \"$release\"},{name: \"revision\", value: \"$revision\"}]}")"
