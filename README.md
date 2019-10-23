@@ -1,3 +1,6 @@
+# Open
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/epitaph-04/concourse-helm-resource)
+
 # Helm Resource for Concourse
 
 ![Docker Build Status](https://img.shields.io/docker/build/epitaph/concourse-helm-resource.svg?style=popout)
