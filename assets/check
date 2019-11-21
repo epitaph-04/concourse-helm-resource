@@ -24,13 +24,14 @@ release=$(jq -r '.source.release // ""' < $payload)
 
 current_release=$(jq -r '.version.release // ""' < $payload)
 current_rev=$(jq -r '.version.revision // "0"' < $payload)
+current_timestamp=$(jq -r '.version.timestamp // "0"' < $payload)
 
 if [ -z "$release" ]; then
     if [ -z "$current_release" ]; then
       echo '[]' >&3
       exit 0
     else
-        jq -n "[{ release: \"$release\", revision: \"$revision\" }]" >&3
+        jq -n "[{ release: \"$current_release\", revision: \"$current_rev\", timestamp: \"$current_timestamp\" }]" >&3
     fi
 else
     rev=$(eval "$helm_request_base history $release" | tail -n 1 | awk '{ print $1 }')

@@ -262,6 +262,7 @@ else
     revision=$(eval "$helm_request_base history $release" | grep "DEPLOYED" | awk '{print $1}')
     echo "Deployed revision $revision of $release"
     wait_ready_notice
-    result="$(jq -n "{version:{release:\"$release\", revision:\"$revision\"}, metadata: [{name: \"release\", value: \"$release\"},{name: \"revision\", value: \"$revision\"}]}")"
+    now=$(date +"%Y%m%d%H%M%S")
+    result="$(jq -n "{version:{release:\"$release\", revision:\"$revision\", timestamp:\"$now\"}, metadata: [{name: \"release\", value: \"$release\"},{name: \"revision\", value: \"$revision\"},{name: \"timestamp\", value: \"$now\"}]}")"
     echo "$result" | jq -s add  >&3
 fi

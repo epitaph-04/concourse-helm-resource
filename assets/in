@@ -12,9 +12,10 @@ cat > $payload <&0
 
 release=$(jq -r '.version.release // ""' < $payload)
 revision=$(jq -r '.version.revision // ""' < $payload)
+timestamp=$(jq -r '.version.timestamp // "0"' < $payload)
 
 if [ -n "$release" ]; then
-  echo $(jq -n "{ version: { release: \"$release\", revision: \"$revision\" } }" | jq -s add) >&3
+  echo $(jq -n "{ version: { release: \"$release\", revision: \"$revision\", timestamp: \"$timestamp\" } }" | jq -s add) >&3
 else
   echo $(jq -n "{ version: { release: \"\" } }" | jq -s add) >&3
 fi
