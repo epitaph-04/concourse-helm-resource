@@ -1,7 +1,7 @@
 FROM alpine:latest
 
-ENV KUBECTL_VERSION 1.14.1
-ENV HELM_VERSION 2.13.1
+ENV KUBECTL_VERSION 1.18.3
+ENV HELM_VERSION 3.2.4
 
 ADD assets /opt/resource
 RUN chmod +x /opt/resource/*
@@ -25,12 +25,11 @@ RUN curl -L -o kubectl \
         && mv kubectl /usr/bin
 
 RUN curl -L -o helm.tar.gz \
-        https://kubernetes-helm.storage.googleapis.com/helm-v${HELM_VERSION}-linux-amd64.tar.gz \
+        https://get.helm.sh/helm-v${HELM_VERSION}-linux-arm64.tar.gz \
         && tar -xvzf helm.tar.gz \
         && rm -rf helm.tar.gz \
         && chmod 0700 linux-amd64/helm \
         && mv linux-amd64/helm /usr/bin \
-        && rm -rf linux-amd64 \
-        && helm init --client-only
+        && rm -rf linux-amd64
 
 ENTRYPOINT [ "/bin/bash" ]
