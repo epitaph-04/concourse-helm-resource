@@ -20,7 +20,7 @@ RUN curl -L -o kubectl \
         && mv kubectl /usr/bin
 
 RUN curl -L -o helm.tar.gz \
-        https://get.helm.sh/helm-v${HELM_VERSION}-linux-arm64.tar.gz \
+        https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz \
         && tar -xvzf helm.tar.gz \
         && rm -rf helm.tar.gz \
         && chmod 0700 linux-amd64/helm \
