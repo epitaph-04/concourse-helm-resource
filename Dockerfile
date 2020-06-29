@@ -8,13 +8,8 @@ RUN chmod +x /opt/resource/*
 
 RUN apk --no-cache add \
         curl \
-        python \
-        py-crcmod \
         bash \
         libc6-compat \
-        openssh-client \
-        git \
-        openssl \
         tar \
         jq \
         ca-certificates
