@@ -129,9 +129,6 @@ helm_install() {
     helm_echo="$helm_echo $chart_full | tee $logfile"
     echo "Running command $helm_echo"
     eval "$helm_cmd"
-
-    # Find the name of the release
-    release=`cat $logfile | grep "NAME:" | awk '{print $2}'`
     echo $release
 }
 
@@ -203,7 +200,7 @@ is_deployed() {
     if [ -n "$1" ]; then
         set +e
         set +o pipefail
-        eval "$helm_request_base history $1" 2>&1 | grep 'DEPLOYED' > /dev/null
+        eval "$helm_request_base history $1" 2>&1 | grep 'deployed' > /dev/null
         if [ $? = 0 ]; then
             # exists
             echo true
@@ -233,7 +230,7 @@ else
         helm_install
     fi
 
-    revision=$(eval "$helm_request_base history $release" | grep "DEPLOYED" | awk '{print $1}')
+    revision=$(eval "$helm_request_base history $release" | grep "deployed" | awk '{print $1}')
     echo "Deployed revision $revision of $release"
     wait_ready_notice
     now=$(date +"%Y%m%d%H%M%S")
